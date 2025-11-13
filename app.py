@@ -3,8 +3,10 @@ from datetime import datetime, timedelta
 
 # ---------------- CONFIG ----------------
 LEADS_FILE = "Sample leads__Probus _ carInfo.xlsx"
-POSP_FILE = "posp.csv"
+POSP_FILE = "posp_updated.xlsx"
 # ----------------------------------------
+
+posp_df = pd.read_excel(POSP_FILE)
 
 # ---- BASIC SIMILARITY SCORING ----
 def simple_similarity(a, b):
@@ -91,7 +93,7 @@ def run_pipeline():
 
     # Step 1: Load data
     leads_df = pd.read_excel(LEADS_FILE, sheet_name="Sheet1")
-    posp_df = pd.read_csv(POSP_FILE)
+    posp_df = pd.read_excel(POSP_FILE, sheet_name="Sheet2")  # ✅ Changed from read_csv to read_excel
 
     # Step 2: Clean data
     leads_df.columns = leads_df.columns.str.strip().str.lower()
@@ -102,8 +104,9 @@ def run_pipeline():
 
     # Step 4: Display result
     print("\n✅ Matching Completed! Top Matches:")
-    print(matched_df)  # Display first few results
+    print(matched_df)  # Show only first few results
     return matched_df
+
 
 
 if __name__ == "__main__":
